@@ -4,33 +4,16 @@ import Space from "./Space";
 class Board extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      size: props.size,
-      spaceArray: new Array(props.size * props.size).fill(""),
-      turn: "X"
-    };
+    this.spaceArray = new Array(props.size * props.size).fill("");
   }
 
-  //Arrow functions in react autobind
-  toggle = () => {
-    if (this.state.turn === "X") {
-      this.setState({ turn: "O" });
-    } else {
-      this.setState({ turn: "X" });
-    }
-  };
-
   place = id => {
-    //let spaceArray = [...this.state.spaceArray]
-    if (this.state.spaceArray[id] !== "") return null;
-    let spaceArray = [...this.state.spaceArray];
-    spaceArray[id] = this.state.turn;
+    if (this.spaceArray[id] !== "") {
+      return null;
+    }
+    this.spaceArray[id] = this.props.turn;
     console.log(id);
-    this.setState({
-      spaceArray: spaceArray
-    });
-
-    this.toggle();
+    this.props.toggle();
   };
 
   generateSpaces(length) {
@@ -39,7 +22,7 @@ class Board extends React.Component {
       spaces.push(
         //NOTE:KEYS ARNT PASSED AS PROPS
         <Space id={i} key={i} onClick={this.place}>
-          {this.state.spaceArray[i]}
+          {this.spaceArray[i]}
         </Space>
       );
     }
@@ -48,10 +31,6 @@ class Board extends React.Component {
 
   render() {
     return <div style={BoardStyle}>{this.generateSpaces(this.props.size)}</div>;
-  }
-
-  spaceResize(newSize) {
-    this.setState({ size: newSize });
   }
 }
 
