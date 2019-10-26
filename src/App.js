@@ -1,13 +1,15 @@
 import React from "react";
 import "./App.css";
 import Board from "./Board/Board";
+import SidePannel from "./SidePannel/SidePannel";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       size: 3,
-      turn: "X"
+      turn: "X",
+      play: true
     };
   }
 
@@ -24,6 +26,14 @@ class App extends React.Component {
     this.setState({ size: newSize });
   };
 
+  checkEnter = e => {
+    if (e.key === "Enter") {
+      this.setState({ size: this.props.size });
+    }
+  };
+
+  restart = () => this.setState({ play: false });
+
   render() {
     return (
       <div className="App">
@@ -32,7 +42,8 @@ class App extends React.Component {
             toggle={this.toggle}
             turn={this.state.turn}
             size={this.state.size}
-          ></Board>
+          />
+          <SidePannel size={this.state.size} />
         </header>
       </div>
     );

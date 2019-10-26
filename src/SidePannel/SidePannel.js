@@ -1,14 +1,11 @@
 import React from "react";
 import SizeBar from "./SizeBar";
 
-class SidePannel {
+class SidePannel extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  enter = e => {
-    if (e.key === "Enter") this.setState({ size: this.props.size });
-  };
   render() {
     return <SizeBar></SizeBar>;
   }
