@@ -1,12 +1,13 @@
 button{
-    background-color: #00731A;
-    border-color: black;
+    background-color: black;
+    border-color: white;
     outline: 0;
-    text-align: center
+    text-align: center;
+    color: whitesmoke
 }
 button:hover{
-    background-color: #035E17
+    background-color: gray
 }
 button:active{
-    background-color: #00731A;
+    background-color: black;
 }
