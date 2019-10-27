@@ -32,7 +32,7 @@ class App extends React.Component {
     }
   };
 
-  restart = () => this.setState({ play: false });
+  gameOver = () => this.setState({ play: false });
 
   render() {
     return (
@@ -42,6 +42,8 @@ class App extends React.Component {
             toggle={this.toggle}
             turn={this.state.turn}
             size={this.state.size}
+            gameOver={this.gameOver}
+            play={this.state.play}
           />
           <SidePannel size={this.state.size} />
         </header>

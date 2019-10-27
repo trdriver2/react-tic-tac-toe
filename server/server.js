@@ -11,7 +11,6 @@ const midCheck = (init, space, additive) => {
 const checkWin = space => {
   let horizontal = space - (space % this.dimension);
   let verticle = space - horizontal;
-
   //check horizontal
   if (midCheck(horizontal, space, 1)) return true;
 
@@ -43,12 +42,28 @@ const checkTie = turn => {
   return false;
 };
 
+const printBoard = () => {
+  let prettyBoard = "";
+  for (let i = 0; i < this.dimension * this.dimension; i++) {
+    if (prettyBoard !== "" && i % this.dimension === 0) prettyBoard += "\n";
+    if (this.board[i] === "") {
+      prettyBoard += " ";
+    } else {
+      prettyBoard += this.board[i];
+    }
+  }
+  console.log(prettyBoard + "\n");
+};
+
 const express = require("express");
+const cors = require("cors");
 const app = express();
+app.use(cors());
 
 const port = 8000;
 
 app.post("/set-width", (req, res) => {
+  req.statusCode = 200;
   req.on("data", chunk => {
     const data = JSON.parse(chunk);
     if (isNaN(data) && data >= 3) {
@@ -70,6 +85,7 @@ app.post("/check-win", (req, res) => {
   req.on("data", chunk => {
     const data = JSON.parse(chunk);
     this.board = data.board;
+    printBoard();
     res.end(JSON.stringify(checkWin(data.space)));
   });
 });

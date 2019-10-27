@@ -5,14 +5,34 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.spaceArray = new Array(props.size * props.size).fill("");
+    this.baseUrl = "http://localhost:8000";
   }
 
   place = id => {
-    if (this.spaceArray[id] !== "") {
+    if (this.spaceArray[id] !== "" || !this.props.play) {
       return null;
     }
+    console.log(this.props.play);
     this.spaceArray[id] = this.props.turn;
     console.log(id);
+
+    let params = {
+      method: "POST",
+      body: JSON.stringify({ space: id, board: this.spaceArray }),
+      headers: {
+        "Content-type": "application/json"
+      }
+    };
+
+    fetch(this.baseUrl + "/check-win", params)
+      .then(resp => resp.json())
+      .then(ans => {
+        if (ans) {
+          window.alert(ans);
+          this.props.gameOver();
+        }
+      });
+
     this.props.toggle();
   };
 
